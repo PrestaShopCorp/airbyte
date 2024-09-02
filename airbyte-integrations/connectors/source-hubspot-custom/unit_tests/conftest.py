@@ -3,8 +3,8 @@
 #
 
 import pytest
-from source_hubspot.source import SourceHubspot
-from source_hubspot.streams import API
+from source_hubspot_custom.source import SourceHubspot
+from source_hubspot_custom.streams import API
 
 NUMBER_OF_PROPERTIES = 2000
 

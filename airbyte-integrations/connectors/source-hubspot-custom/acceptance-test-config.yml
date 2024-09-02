@@ -3,7 +3,7 @@ test_strictness_level: high
 acceptance_tests:
   spec:
     tests:
-      - spec_path: source_hubspot/spec.yaml
+      - spec_path: source_hubspot_custom/spec.yaml
   connection:
     tests:
       - config_path: secrets/config_oauth.json

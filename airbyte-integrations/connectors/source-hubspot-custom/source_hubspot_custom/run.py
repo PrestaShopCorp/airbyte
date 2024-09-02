@@ -6,7 +6,7 @@
 import sys
 
 from airbyte_cdk.entrypoint import launch
-from source_hubspot import SourceHubspot
+from source_hubspot_custom import SourceHubspot
 
 
 def run():

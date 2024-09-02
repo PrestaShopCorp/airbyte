@@ -1,7 +1,14 @@
-# Hubspot source connector
+# Hubspot Custom source connector
 
 This is the repository for the Hubspot source connector, written in Python.
 For information about how to use this connector within Airbyte, see [the documentation](https://docs.airbyte.com/integrations/sources/hubspot).
+
+### Changes
+
+Changes from the original Hubspot Connector are :
+
+- **Deals** :
+  - Filter records on Pipeline = Sales pipeline Addons (062f0eb3-9976-4074-a67c-9d5e177432a1)
 
 ## Local development
 
@@ -21,17 +28,17 @@ poetry install --with dev
 ### Create credentials
 
 **If you are a community contributor**, follow the instructions in the [documentation](https://docs.airbyte.com/integrations/sources/hubspot)
-to generate the necessary credentials. Then create a file `secrets/config.json` conforming to the `source_hubspot/spec.yaml` file.
+to generate the necessary credentials. Then create a file `secrets/config.json` conforming to the `source_hubspot_custom/spec.yaml` file.
 Note that any directory named `secrets` is gitignored across the entire Airbyte repo, so there is no danger of accidentally checking in sensitive information.
 See `sample_files/sample_config.json` for a sample config file.
 
 ### Locally running the connector
 
 ```
-poetry run source-hubspot spec
-poetry run source-hubspot check --config secrets/config.json
-poetry run source-hubspot discover --config secrets/config.json
-poetry run source-hubspot read --config secrets/config.json --catalog integration_tests/basic_read_catalog.json
+poetry run source-hubspot-custom spec
+poetry run source-hubspot-custom check --config secrets/config.json
+poetry run source-hubspot-custom discover --config secrets/config.json
+poetry run source-hubspot-custom read --config secrets/config.json --catalog integration_tests/basic_read_catalog.json
 ```
 
 ### Running unit tests
@@ -48,20 +55,20 @@ poetry run pytest unit_tests
 2. Run the following command to build the docker image:
 
 ```bash
-airbyte-ci connectors --name=source-hubspot build
+airbyte-ci connectors --name=source-hubspot-custom build
 ```
 
-An image will be available on your host with the tag `airbyte/source-hubspot:dev`.
+An image will be available on your host with the tag `airbyte/source-hubspot-custom:dev`.
 
 ### Running as a docker container
 
 Then run any of the connector commands as follows:
 
 ```
-docker run --rm airbyte/source-hubspot:dev spec
-docker run --rm -v $(pwd)/secrets:/secrets airbyte/source-hubspot:dev check --config /secrets/config.json
-docker run --rm -v $(pwd)/secrets:/secrets airbyte/source-hubspot:dev discover --config /secrets/config.json
-docker run --rm -v $(pwd)/secrets:/secrets -v $(pwd)/integration_tests:/integration_tests airbyte/source-hubspot:dev read --config /secrets/config.json --catalog /integration_tests/configured_catalog.json
+docker run --rm airbyte/source-hubspot-custom:dev spec
+docker run --rm -v $(pwd)/secrets:/secrets airbyte/source-hubspot-custom:dev check --config /secrets/config.json
+docker run --rm -v $(pwd)/secrets:/secrets airbyte/source-hubspot-custom:dev discover --config /secrets/config.json
+docker run --rm -v $(pwd)/secrets:/secrets -v $(pwd)/integration_tests:/integration_tests airbyte/source-hubspot-custom:dev read --config /secrets/config.json --catalog /integration_tests/configured_catalog.json
 ```
 
 ### Running our CI test suite
@@ -69,7 +76,7 @@ docker run --rm -v $(pwd)/secrets:/secrets -v $(pwd)/integration_tests:/integrat
 You can run our full test suite locally using [`airbyte-ci`](https://github.com/airbytehq/airbyte/blob/master/airbyte-ci/connectors/pipelines/README.md):
 
 ```bash
-airbyte-ci connectors --name=source-hubspot test
+airbyte-ci connectors --name=source-hubspot-custom test
 ```
 
 ### Customizing acceptance Tests
@@ -92,7 +99,7 @@ Please commit the changes to `pyproject.toml` and `poetry.lock` files.
 
 You've checked out the repo, implemented a million dollar feature, and you're ready to share your changes with the world. Now what?
 
-1. Make sure your changes are passing our test suite: `airbyte-ci connectors --name=source-hubspot test`
+1. Make sure your changes are passing our test suite: `airbyte-ci connectors --name=source-hubspot-custom test`
 2. Bump the connector version (please follow [semantic versioning for connectors](https://docs.airbyte.com/contributing-to-airbyte/resources/pull-requests-handbook/#semantic-versioning-for-connectors)):
    - bump the `dockerImageTag` value in in `metadata.yaml`
    - bump the `version` value in `pyproject.toml`

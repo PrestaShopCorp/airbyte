@@ -11,7 +11,7 @@ from airbyte_cdk.test.entrypoint_wrapper import EntrypointOutput, read
 from airbyte_cdk.test.mock_http import HttpMocker
 from airbyte_cdk.test.mock_http.response_builder import FieldPath, HttpResponseBuilder, RecordBuilder, create_record_builder, find_template
 from airbyte_protocol.models import AirbyteStateMessage, SyncMode
-from source_hubspot import SourceHubspot
+from source_hubspot_custom import SourceHubspot
 
 from .config_builder import ConfigBuilder
 from .request_builders.api import CustomObjectsRequestBuilder, OAuthRequestBuilder, PropertiesRequestBuilder, ScopesRequestBuilder

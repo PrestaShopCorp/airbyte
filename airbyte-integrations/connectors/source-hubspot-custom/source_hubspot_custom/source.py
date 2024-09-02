@@ -14,8 +14,8 @@ from airbyte_cdk.sources.streams import Stream
 from airbyte_cdk.sources.streams.http import HttpClient
 from airbyte_cdk.sources.streams.http.error_handlers import ErrorResolution, HttpStatusErrorHandler, ResponseAction
 from requests import HTTPError
-from source_hubspot.errors import HubspotInvalidAuth
-from source_hubspot.streams import (
+from source_hubspot_custom.errors import HubspotInvalidAuth
+from source_hubspot_custom.streams import (
     API,
     Campaigns,
     Companies,

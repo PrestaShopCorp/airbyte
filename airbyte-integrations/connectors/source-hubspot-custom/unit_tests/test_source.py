@@ -12,10 +12,10 @@ import mock
 import pendulum
 import pytest
 from airbyte_cdk.models import ConfiguredAirbyteCatalog, SyncMode, Type
-from source_hubspot.errors import HubspotRateLimited, InvalidStartDateConfigError
-from source_hubspot.helpers import APIv3Property
-from source_hubspot.source import SourceHubspot
-from source_hubspot.streams import API, Companies, Deals, Engagements, MarketingEmails, Products, Stream
+from source_hubspot_custom.errors import HubspotRateLimited, InvalidStartDateConfigError
+from source_hubspot_custom.helpers import APIv3Property
+from source_hubspot_custom.source import SourceHubspot
+from source_hubspot_custom.streams import API, Companies, Deals, Engagements, MarketingEmails, Products, Stream
 
 from .utils import read_full_refresh, read_incremental
 
@@ -80,7 +80,7 @@ def test_check_connection_invalid_start_date_exception(config_invalid_date):
         assert error_msg
 
 
-@mock.patch("source_hubspot.source.SourceHubspot.get_custom_object_streams")
+@mock.patch("source_hubspot_custom.source.SourceHubspot.get_custom_object_streams")
 def test_streams(requests_mock, config):
 
     streams = SourceHubspot().streams(config)
@@ -88,7 +88,7 @@ def test_streams(requests_mock, config):
     assert len(streams) == 34
 
 
-@mock.patch("source_hubspot.source.SourceHubspot.get_custom_object_streams")
+@mock.patch("source_hubspot_custom.source.SourceHubspot.get_custom_object_streams")
 def test_streams_incremental(requests_mock, config_experimental):
 
     streams = SourceHubspot().streams(config_experimental)
@@ -735,8 +735,8 @@ def test_streams_oauth_2_auth_no_suitable_scopes(requests_mock, mocker, config):
     authenticator = mocker.Mock()
     authenticator.get_access_token.return_value = "the-token"
 
-    mocker.patch("source_hubspot.streams.API.is_oauth2", return_value=True)
-    mocker.patch("source_hubspot.streams.API.get_authenticator", return_value=authenticator)
+    mocker.patch("source_hubspot_custom.streams.API.is_oauth2", return_value=True)
+    mocker.patch("source_hubspot_custom.streams.API.get_authenticator", return_value=authenticator)
 
     requests_mock.get("https://api.hubapi.com/crm/v3/schemas", json={}, status_code=200)
 

@@ -29,9 +29,9 @@ from airbyte_cdk.sources.utils.schema_helpers import ResourceSchemaLoader
 from airbyte_cdk.sources.utils.transform import TransformConfig, TypeTransformer
 from airbyte_cdk.utils import AirbyteTracedException
 from requests import HTTPError, codes
-from source_hubspot.constants import OAUTH_CREDENTIALS, PRIVATE_APP_CREDENTIALS
-from source_hubspot.errors import HubspotAccessDenied, HubspotInvalidAuth, HubspotRateLimited, HubspotTimeout, InvalidStartDateConfigError
-from source_hubspot.helpers import (
+from source_hubspot_custom.constants import OAUTH_CREDENTIALS, PRIVATE_APP_CREDENTIALS
+from source_hubspot_custom.errors import HubspotAccessDenied, HubspotInvalidAuth, HubspotRateLimited, HubspotTimeout, InvalidStartDateConfigError
+from source_hubspot_custom.helpers import (
     APIPropertiesWithHistory,
     APIv1Property,
     APIv2Property,
@@ -1488,6 +1488,29 @@ class Deals(CRMSearchStream):
     primary_key = "id"
     scopes = {"contacts", "crm.objects.deals.read"}
 
+    ## Add filters to Deals
+    def search(self, url: str, data: Mapping[str, Any], params: MutableMapping[str, Any] = None) -> Tuple[Union[Mapping[str, Any], List[Mapping[str, Any]]], requests.Response]:        
+        filter_groups = [
+            {
+                "filters": [data["filters"][0],
+                {
+                    "propertyName": "pipeline",
+                    "operator": "EQ",
+                    "value": "062f0eb3-9976-4074-a67c-9d5e177432a1"
+                },
+                {
+                    "propertyName": "hs_object_id",
+                    "operator": "EQ",
+                    "value": "21225568951"
+                }
+                ]
+            }
+        ]
+
+        del data['filters']
+        data['filterGroups'] = filter_groups
+            
+        return super().search(url, data, params)
 
 class DealsArchived(ClientSideIncrementalStream):
     """Archived Deals, API v3"""
@@ -2323,7 +2346,7 @@ class WebAnalyticsStream(CheckpointMixin, HttpSubStream, Stream):
             "type": ["null", "object"],
             "$ref": "default_event_properties.json",
         }
-        return ResourceSchemaLoader("source_hubspot")._resolve_schema_references(raw_schema=raw_schema)
+        return ResourceSchemaLoader("source_hubspot_custom")._resolve_schema_references(raw_schema=raw_schema)
 
     def get_latest_state(
         self, current_stream_state: MutableMapping[str, Any], latest_record: Mapping[str, Any]
