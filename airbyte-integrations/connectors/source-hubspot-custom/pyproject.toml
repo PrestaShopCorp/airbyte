@@ -4,9 +4,9 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 version = "4.2.18"
-name = "source-hubspot"
-description = "Source implementation for HubSpot."
-authors = [ "Airbyte <contact@airbyte.io>",]
+name = "source-hubspot-custom"
+description = "Source implementation for HubSpot. Customized by Prestashop."
+authors = [ "Airbyte <contact@airbyte.io>", "Jeremy Juventin <jeremy.juventin@prestashop.com>"]
 license = "ELv2"
 readme = "README.md"
 documentation = "https://docs.airbyte.com/integrations/sources/hubspot"

@@ -11,18 +11,18 @@ data:
   connectorType: source
   definitionId: 36c891d9-4bd9-43ac-bad2-10e12756272c
   dockerImageTag: 4.2.18
-  dockerRepository: airbyte/source-hubspot
+  dockerRepository: airbyte/source-hubspot-custom
   documentationUrl: https://docs.airbyte.com/integrations/sources/hubspot
   erdUrl: https://dbdocs.io/airbyteio/source-hubspot?view=relationships
-  githubIssueLabel: source-hubspot
+  githubIssueLabel: source-hubspot-custom
   icon: hubspot.svg
   license: ELv2
   maxSecondsBetweenMessages: 86400
-  name: HubSpot
+  name: HubSpot Custom
   remoteRegistries:
     pypi:
       enabled: true
-      packageName: airbyte-source-hubspot
+      packageName: airbyte-source-hubspot-custom
   registryOverrides:
     cloud:
       enabled: true
