@@ -109,3 +109,29 @@ You've checked out the repo, implemented a million dollar feature, and you're re
 6. Pat yourself on the back for being an awesome contributor.
 7. Someone from Airbyte will take a look at your PR and iterate with you to merge it into master.
 8. Once your PR is merged, the new version of the connector will be automatically published to Docker Hub and our connector registry.
+
+Build the docker image then run the following : 
+
+```sh
+docker tag airbyte/source-hubspot-custom:dev <ZONE>-docker.pkg.dev/<GCP-PROJECT-ID>/source-hubspot-custom/4.2.18:latest
+docker push <ZONE>-docker.pkg.dev/<GCP-PROJECT-ID>/source-hubspot-custom/4.2.18:latest
+```
+
+*Example :*
+```sh
+docker tag airbyte/source-hubspot-custom:dev europe-west1-docker.pkg.dev/ps-data-prestashop-airbyte/source-hubspot-custom/v0:latest
+docker push europe-west1-docker.pkg.dev/ps-data-prestashop-airbyte/source-hubspot-custom/v0:latest
+```
+
+airbyte-ci connectors --name=source-hubspot-custom build --architecture=linux/arm64
+
+docker build --platform=linux/amd64 . -t airbyte/source-hubspot-custom
+
+
+docker buildx build --platform linux/amd64 -f ./Dockerfile -t airbyte/source-hubspot-custom . --output type=docker 
+docker tag airbyte/source-hubspot-custom europe-west1-docker.pkg.dev/ps-data-prestashop-airbyte/source-hubspot-custom/v0:latest
+docker push europe-west1-docker.pkg.dev/ps-data-prestashop-airbyte/source-hubspot-custom/v0:latest
+
+
+
+gcloud builds submit --tag europe-west1-docker.pkg.dev/ps-data-prestashop-airbyte/source-hubspot-custom/v0:latest .
